@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.meow.dao.UserDao">
+        <resultMap id="name2" type="com.meow.domain.User" >
+            <result column="class_id" property="classId"></result>
+            <result column="class_name" property="className"></result>
+        </resultMap>
+
+    <select id="selectByPageAndCondition"  resultType="com.meow.domain.User" resultMap="name2">
+        select *
+        from tb_user
+        <where>
+            <if test="user.name!=null and user.name!=''">
+                and name like #{user.name}
+            </if>
+            <if test="user.className!=null and user.className!=''">
+                and class_name like #{user.className}
+            </if>
+            <if test="user.school!=null and user.school!=''">
+                and school like #{user.school}
+            </if>
+            <if test="user.exam!=null and user.exam!=''">
+                and exam like #{user.exam}
+            </if>
+        </where>
+        limit #{index},#{size}
+        ;
+    </select>
+
+
+        <select id="selectTotalCountAndCondition" resultType="java.lang.Integer" >
+            select count(*)
+            from tb_user
+            <where>
+                <if test="user.name!=null and user.name!=''">
+                    and name like #{user.name}
+                </if>
+                <if test="user.className!=null and user.className!=''">
+                    and class_name like #{user.className}
+                </if>
+                <if test="user.school!=null and user.school!=''">
+                    and school like #{user.school}
+                </if>
+                <if test="user.exam!=null and user.exam!=''">
+                    and exam like #{user.exam}
+                </if>
+            </where>
+
+            ;
+        </select>
+
+
+
+<!--    <insert id="addBrand" >-->
+<!--        insert into tb_brand (brand_name, company_name, ordered, description, status)-->
+<!--        values (#{brandName},#{companyName},#{ordered},#{description},#{status});-->
+<!--    </insert>-->
+<!--    <update id="updateById">-->
+<!--        update tb_brand-->
+<!--        set brand_name = #{brandName},-->
+<!--            company_name =#{companyName},-->
+<!--            ordered =#{ordered},-->
+<!--            description =#{description},-->
+<!--            status = #{status}-->
+<!--        where id =#{id};-->
+<!--    </update>-->
+
+<!--    <delete id="deleteByIds">-->
+<!--        delete from tb_brand-->
+<!--        where id in-->
+<!--        <foreach collection="ids" item="id" separator="," open="(" close=")">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+<!--    </delete>-->
+
+
+
+
+</mapper>
